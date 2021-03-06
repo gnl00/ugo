@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: ugo - a online shopping platform
+  datasource:
+    url: jdbc:mysql:///ugo?useSSL=false
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  type-aliases-package: com.boot.ugo.entity

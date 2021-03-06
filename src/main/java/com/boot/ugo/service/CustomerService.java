@@ -1,0 +1,13 @@
+package com.boot.ugo.service;
+
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.boot.ugo.entity.Customer;
+
+/**
+ * CustomerService
+ *
+ * @author gnl
+ */
+
+public interface CustomerService extends IService<Customer> {
+}
