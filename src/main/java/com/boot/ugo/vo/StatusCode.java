@@ -1,26 +1,44 @@
 package com.boot.ugo.vo;
 
+import org.springframework.http.HttpStatus;
+
 /**
  * StatusCode 返回值状态码
  *
  * @author gnl
  */
 
-public enum StatusCode {
+public class StatusCode {
 
-    OK(200),
-    UNAUTHORIZED (401),
-    FORBIDDEN(403),
-    NOTFOUND(404),
-    MethodNotAllowed(405),
-    ServiceUnavailable(503);
+    /**
+     * 200 OK
+     */
+    public static final int OK = HttpStatus.OK.value();
 
-    private int code;
+    /**
+     * 401  UNAUTHORIZED
+     */
+    public static final int UNAUTHORIZED = HttpStatus.UNAUTHORIZED.value();
 
-    StatusCode(int code) {}
+    /**
+     * 403  FORBIDDEN
+     */
+    public static final int FORBIDDEN = HttpStatus.FORBIDDEN.value();
 
-    public int getCode() {
-        return this.code;
-    }
+    /**
+     * 404 NOT_FOUND
+     */
+    public static final int NOTFOUND = HttpStatus.NOT_FOUND.value();
+
+    /**
+     * 405  METHOD_NOT_ALLOWED
+     */
+    public static final int METHOD_NOT_ALLOWED = HttpStatus.METHOD_NOT_ALLOWED.value();
+
+    /**
+     * 503  SERVICE_UNAVAILABLE
+     */
+    public static final int SERVICE_UNAVAILABLE = HttpStatus.SERVICE_UNAVAILABLE.value();
+
 
 }

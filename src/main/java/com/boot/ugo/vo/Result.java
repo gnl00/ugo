@@ -25,7 +25,7 @@ public class Result {
     /**
      * 返回状态码
      */
-    private StatusCode code;
+    private int code;
 
     /**
      * 返回信息

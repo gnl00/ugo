@@ -4,10 +4,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * TODO
+ * AdminController
  *
  * @author gnl
- * @date 2021-03-06 14:43
  */
 
 @RestController

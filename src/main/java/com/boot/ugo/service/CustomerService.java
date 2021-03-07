@@ -10,4 +10,15 @@ import com.boot.ugo.entity.Customer;
  */
 
 public interface CustomerService extends IService<Customer> {
+
+    /**
+     * 顾客登录
+     *
+     * @author gnl
+     * @param name
+     * @param password
+     * @return java.lang.String
+     */
+    String login(String name, String password);
+
 }

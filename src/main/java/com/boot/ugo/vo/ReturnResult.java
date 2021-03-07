@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.http.HttpStatus;
 
 /**
  * ReturnResult 返回值封装类
@@ -31,7 +32,7 @@ public class ReturnResult {
         return new Result(true, StatusCode.OK, msg, data);
     }
 
-    public static Result fail(StatusCode code, String msg) {
+    public static Result fail(int code, String msg) {
         return new Result(false, code, msg, null);
     }
 

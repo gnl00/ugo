@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * UgoApplication 主程序类
- * @MapperScan 扫描mapper类所在的包，使用此注解就【不需要】再在mapper接口类上标注@Mapper注解
+ * @MapperScan 扫描mapper 类所在的包，使用此注解就【不需要】再在mapper 接口类上标注@Mapper 注解
  *
  * @author gnl
  */

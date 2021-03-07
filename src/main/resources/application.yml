@@ -12,3 +12,7 @@ mybatis-plus:
     map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   type-aliases-package: com.boot.ugo.entity
+
+# 请求白名单
+request:
+  white: /ugo/cus/hello,/ugo/cus/login,/ugo/test/**
