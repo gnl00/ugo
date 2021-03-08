@@ -20,6 +20,7 @@ import java.util.Map;
  */
 
 @Slf4j
+@CrossOrigin
 @RestController
 @RequestMapping("/ugo/cus")
 public class CustomerController {
@@ -33,7 +34,7 @@ public class CustomerController {
     }
 
     @PostMapping("/login")
-    public Result login(@RequestBody Map<String, Object> map, HttpServletResponse response){
+    public Result login(@RequestBody Map<String, Object> map){
         log.info(map.toString());
 
         String name = (String) map.get("name");
@@ -43,8 +44,7 @@ public class CustomerController {
             String token = customerService.login(name, password);
 
             if (StringUtils.hasLength(token)){
-                response.setHeader(JwtTokenUtils.JWT_HEADER, token);
-                return ReturnResult.ok();
+                return ReturnResult.ok(token);
             }
 
             return ReturnResult.fail(StatusCode.UNAUTHORIZED, "登录失败");
