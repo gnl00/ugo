@@ -1,4 +1,4 @@
-package com.boot.ugo.util;
+package com.boot.ugo.utils;
 
 import io.jsonwebtoken.*;
 import lombok.Getter;

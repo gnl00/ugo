@@ -10,6 +10,8 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
 
 mybatis-plus:
+  # mapper-locations 默认位置为 classpath:mapper/*.xml
+  # mapper-locations:
   configuration:
     map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
@@ -17,4 +19,4 @@ mybatis-plus:
 
 # SpringSecurity请求白名单
 request:
-  white: /ugo/cus/hello,/ugo/cus/login,/ugo/test/**
+  white: /ugo/cus/hello,/ugo/cus/login,/ugo/test/*,/ugo/goo/*

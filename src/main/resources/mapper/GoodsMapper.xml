@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boot.ugo.mapper.GoodsMapper">
+
+    <!-- 查询首页推荐数据 -->
+    <select id="getRecommendGoods" resultType="com.boot.ugo.entity.Goods">
+        SELECT id, name, description,price, amount, photo, category_id, status FROM goods where status = 'up' ORDER BY RAND() LIMIT 4;
+    </select>
+
+    <!-- 查询首页选项卡数据 -->
+    <select id="getTabGoods" resultType="com.boot.ugo.entity.Goods">
+        SELECT id, name, description,price, amount, photo, category_id, status FROM goods where status = 'up' and id &lt;= 100 ORDER BY RAND() LIMIT 16;
+    </select>
+
+</mapper>

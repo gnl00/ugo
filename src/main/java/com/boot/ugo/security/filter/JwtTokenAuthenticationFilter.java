@@ -1,6 +1,6 @@
 package com.boot.ugo.security.filter;
 
-import com.boot.ugo.util.JwtTokenUtils;
+import com.boot.ugo.utils.JwtTokenUtils;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;

@@ -5,7 +5,7 @@ import com.boot.ugo.entity.Customer;
 import com.boot.ugo.mapper.CustomerMapper;
 import com.boot.ugo.security.impl.UserDetailsServiceImpl;
 import com.boot.ugo.service.CustomerService;
-import com.boot.ugo.util.JwtTokenUtils;
+import com.boot.ugo.utils.JwtTokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,7 +1,6 @@
 package com.boot.ugo.controller;
 
 import com.boot.ugo.service.CustomerService;
-import com.boot.ugo.util.JwtTokenUtils;
 import com.boot.ugo.vo.Result;
 import com.boot.ugo.vo.ReturnResult;
 import com.boot.ugo.vo.StatusCode;
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
