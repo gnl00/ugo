@@ -3,14 +3,34 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.boot.ugo.mapper.GoodsMapper">
 
-    <!-- 查询首页推荐数据 -->
-    <select id="getRecommendGoods" resultType="com.boot.ugo.entity.Goods">
-        SELECT id, name, description,price, amount, photo, category_id, status FROM goods where status = 'up' ORDER BY RAND() LIMIT 4;
-    </select>
+    <resultMap id="goodsMap" type="goods">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="price" property="price" />
+        <result column="amount" property="amount" />
+        <result column="description" property="description" />
+        <result column="collect" property="collect" />
+        <result property="categoryId" column="category_id" />
+        <result property="status" column="status" />
+    </resultMap>
 
-    <!-- 查询首页选项卡数据 -->
-    <select id="getTabGoods" resultType="com.boot.ugo.entity.Goods">
-        SELECT id, name, description,price, amount, photo, category_id, status FROM goods where status = 'up' and id &lt;= 100 ORDER BY RAND() LIMIT 16;
+    <resultMap id="homeGoodsMap" type="homeGoodsVo">
+        <id column="id" property="goods.id" />
+        <result column="name" property="goods.name" />
+        <result column="price" property="goods.price" />
+        <result column="amount" property="goods.amount" />
+        <result column="collect" property="goods.collect" />
+
+        <collection property="picture" ofType="string" javaType="arrayList">
+            <constructor>
+                <arg column="picture"></arg>
+            </constructor>
+        </collection>
+
+    </resultMap>
+
+    <select id="getRecommendGoods" resultMap="homeGoodsMap">
+        SELECT goods.id, name, picture FROM goods JOIN goods_picture ON goods.id=goods_picture.goods_id ORDER BY RAND() LIMIT 4
     </select>
 
 </mapper>

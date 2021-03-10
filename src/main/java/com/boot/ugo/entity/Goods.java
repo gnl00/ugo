@@ -1,11 +1,13 @@
 package com.boot.ugo.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Goods 商品实体类
@@ -38,9 +40,9 @@ public class Goods {
     private String description;
 
     /**
-     * 商品展示图片
+     * 商品收藏数
      */
-    private String photo;
+    private Integer collect;
 
     /**
      * 商品类别Id
