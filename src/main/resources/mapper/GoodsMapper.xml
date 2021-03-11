@@ -10,7 +10,6 @@
         <result column="amount" property="amount" />
         <result column="description" property="description" />
         <result column="collect" property="collect" />
-        <result property="categoryId" column="category_id" />
         <result property="status" column="status" />
     </resultMap>
 
@@ -26,11 +25,31 @@
                 <arg column="picture"></arg>
             </constructor>
         </collection>
+    </resultMap>
+
+    <resultMap id="sortGoodsMap" type="categoryGoodsVo">
+        <result column="goods_id" property="goods.id" />
+        <result column="goods_name" property="goods.name" />
+        <result column="price" property="goods.price" />
+        <result column="amount" property="goods.amount" />
+        <result column="description" property="goods.description" />
+        <result column="collect" property="goods.collect" />
+        <result column="category_id" property="category.id" />
+
+        <collection property="picture" ofType="string" javaType="arrayList">
+            <constructor>
+                <arg column="picture"></arg>
+            </constructor>
+        </collection>
 
     </resultMap>
 
     <select id="getRecommendGoods" resultMap="homeGoodsMap">
         SELECT goods.id, name, picture FROM goods JOIN goods_picture ON goods.id=goods_picture.goods_id ORDER BY RAND() LIMIT 4
+    </select>
+
+    <select id="getGoodsBySort" resultMap="sortGoodsMap" parameterType="integer">
+        select goods.id goods_id, goods.name goods_name, goods.price, amount, description, collect, goods_category.category_three category_id, picture from goods_category join goods on goods.id = goods_category.goods_id JOIN goods_picture on goods_picture.goods_id = goods.id where category_two = #{categoryId} and status = 'up' ORDER BY ${sort} DESC
     </select>
 
 </mapper>

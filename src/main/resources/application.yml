@@ -19,4 +19,4 @@ mybatis-plus:
 
 # SpringSecurity请求白名单
 request:
-  white: /ugo/cus/hello,/ugo/cus/login,/ugo/test/*,/ugo/goo/*
+  white: /ugo/cus/hello,/ugo/cus/login,/ugo/test/*,/ugo/goo/*,/ugo/cat/*

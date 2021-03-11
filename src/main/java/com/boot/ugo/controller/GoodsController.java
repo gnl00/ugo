@@ -1,6 +1,7 @@
 package com.boot.ugo.controller;
 
 import com.boot.ugo.entity.Goods;
+import com.boot.ugo.entity.vo.CategoryGoodsVo;
 import com.boot.ugo.entity.vo.HomeGoodsVo;
 import com.boot.ugo.service.GoodsService;
 import com.boot.ugo.vo.PageResult;
@@ -12,7 +13,6 @@ import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
-import sun.rmi.runtime.Log;
 
 import java.util.HashMap;
 import java.util.List;
@@ -57,6 +57,40 @@ public class GoodsController {
         goodsMap.put(HOME, homeGoods);
 
         return ReturnResult.ok(goodsMap);
+    }
+
+    /**
+     * search 商品搜索
+     *
+     * @author gnl
+     * @param keyword
+     * @return com.boot.ugo.vo.Result
+     */
+    @GetMapping("/search")
+    public Result search(@RequestParam(name = "keyword") String keyword) {
+        log.info(keyword);
+        return ReturnResult.ok(keyword);
+    }
+
+    /**
+     * getGoodsBySort 按照排序获取商品
+     *
+     * @author gnl
+     * @param category 商品类别
+     * @param sort 排序方式
+     * @return com.boot.ugo.vo.Result
+     */
+    @GetMapping("/sort")
+    public Result getGoodsBySort(@RequestParam Integer category,
+                                 @RequestParam String sort){
+
+        List<CategoryGoodsVo> goods = goodsService.getGoodsBySort(category, sort);
+
+        if (CollectionUtils.isEmpty(goods)){
+            return ReturnResult.fail(StatusCode.NOTFOUND,"根据分类获取商品失败！");
+        }
+
+        return ReturnResult.ok(goods);
     }
 
 

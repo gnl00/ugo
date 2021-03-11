@@ -5,9 +5,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.boot.ugo.entity.Goods;
 import com.boot.ugo.entity.GoodsPicture;
+import com.boot.ugo.entity.vo.CategoryGoodsVo;
 import com.boot.ugo.entity.vo.HomeGoodsVo;
 import com.boot.ugo.mapper.GoodsMapper;
-import com.boot.ugo.mapper.GoodsPictureMapper;
 import com.boot.ugo.service.GoodsPictureService;
 import com.boot.ugo.service.GoodsService;
 import com.boot.ugo.vo.PageResult;
@@ -72,7 +72,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
 
                 log.info("getHomeGoods ===> HOT");
 
-                minId = 30;
+                minId = 20;
                 maxId = 70;
 
                 break;
@@ -98,7 +98,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
 
                 log.info("getHomeGoods ===> HISTORY");
 
-                minId = 150;
+                minId = 140;
                 maxId = 300;
 
                 break;
@@ -111,8 +111,8 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
 
                 log.info("getHomeGoods ===> default");
 
-                minId = 70;
-                maxId = 150;
+                minId = 30;
+                maxId = 2000;
 
         }
 
@@ -146,5 +146,46 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         }
 
         return new PageResult(goodsPage.getCurrent(), homeGoodsVos);
+    }
+
+    @Override
+    public List<CategoryGoodsVo> getGoodsBySort(Integer categoryId, String sort) {
+
+        // 综合排序
+        final String COMP = "comp";
+
+        // 销量排序 按照收藏数排序
+        final String SALES = "sales";
+
+        // 价格排序
+        final String PRICE = "price";
+
+        List<CategoryGoodsVo> goods =  null;
+
+        switch (sort) {
+            case COMP:
+                log.info("获取综合排序");
+
+                goods = goodsMapper.getGoodsBySort(categoryId, "goods_id");
+
+                break;
+            case SALES:
+                log.info("获取销售排序");
+
+                goods = goodsMapper.getGoodsBySort(categoryId, "collect");
+
+                break;
+            case PRICE:
+                log.info("获取价格排序");
+
+                goods = goodsMapper.getGoodsBySort(categoryId, "price");
+
+                break;
+            default:
+                log.info("默认排序");
+                goods = goodsMapper.getGoodsBySort(categoryId, "goods_id");
+        }
+
+        return goods;
     }
 }

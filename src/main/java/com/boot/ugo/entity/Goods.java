@@ -45,11 +45,6 @@ public class Goods {
     private Integer collect;
 
     /**
-     * 商品类别Id
-     */
-    private Integer categoryId;
-
-    /**
      * 商品状态
      * 1. up 上架，可被搜索，可下单
      * 2. down 下架，可被搜索，无法下单

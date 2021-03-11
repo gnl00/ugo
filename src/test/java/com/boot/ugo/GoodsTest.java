@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.boot.ugo.entity.Goods;
 import com.boot.ugo.entity.GoodsPicture;
+import com.boot.ugo.entity.vo.CategoryGoodsVo;
 import com.boot.ugo.entity.vo.HomeGoodsVo;
 import com.boot.ugo.mapper.GoodsMapper;
 import com.boot.ugo.mapper.GoodsPictureMapper;
@@ -79,6 +80,12 @@ public class GoodsTest {
         PageResult result = goodsService.getHomeGoods("hot", 2);
         System.out.println(result);
 
+    }
+
+    @Test
+    public void testGetBySort() {
+        List<CategoryGoodsVo> goods = goodsMapper.getGoodsBySort(3, "collect");
+        goods.forEach(System.out::println);
     }
 
 }
