@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.boot.ugo.entity.Goods;
 import com.boot.ugo.entity.GoodsPicture;
 import com.boot.ugo.entity.vo.CategoryGoodsVo;
-import com.boot.ugo.entity.vo.HomeGoodsVo;
+import com.boot.ugo.entity.vo.GoodsVo;
 import com.boot.ugo.mapper.GoodsMapper;
 import com.boot.ugo.service.GoodsPictureService;
 import com.boot.ugo.service.GoodsService;
@@ -39,9 +39,9 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
     GoodsPictureService goodsPictureService;
 
     @Override
-    public List<HomeGoodsVo> getRecommendGoods() throws NotFoundException {
+    public List<GoodsVo> getRecommendGoods() throws NotFoundException {
 
-        List<HomeGoodsVo> recommendGoods = goodsMapper.getRecommendGoods();
+        List<GoodsVo> recommendGoods = goodsMapper.getRecommendGoods();
 
         if (CollectionUtils.isEmpty(recommendGoods)){
             throw new NotFoundException("获取推荐商品信息失败");
@@ -129,7 +129,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         Page<Goods> goodsPage = goodsMapper.selectPage(pageWrapper, wrapper);
         List<Goods> goods = goodsPage.getRecords();
 
-        List<HomeGoodsVo> homeGoodsVos = new ArrayList<>();
+        List<GoodsVo> goodsVos = new ArrayList<>();
 
         for (Goods good : goods) {
 
@@ -138,14 +138,14 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
             List<GoodsPicture> goodsPictures = goodsPictureService.list(pictureWrapper);
             List<String> pictures = goodsPictures.stream().map(GoodsPicture::getPicture).collect(Collectors.toList());
 
-            homeGoodsVos.add(new HomeGoodsVo(good, pictures));
+            goodsVos.add(new GoodsVo(good, pictures, null));
         }
 
-        if (CollectionUtils.isEmpty(homeGoodsVos)){
+        if (CollectionUtils.isEmpty(goodsVos)){
             throw new NotFoundException("获取选项卡商品信息失败");
         }
 
-        return new PageResult(goodsPage.getCurrent(), homeGoodsVos);
+        return new PageResult(goodsPage.getCurrent(), goodsVos);
     }
 
     @Override
@@ -187,5 +187,15 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         }
 
         return goods;
+    }
+
+    @Override
+    public GoodsVo getGoodsById(Integer goodsId) {
+        return goodsMapper.getGoodsById(goodsId);
+    }
+
+    @Override
+    public List<GoodsVo> getByParentId(Integer parentId) {
+        return goodsMapper.getGoodsByParentId(parentId);
     }
 }

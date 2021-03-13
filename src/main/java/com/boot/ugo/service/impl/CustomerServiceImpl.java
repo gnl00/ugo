@@ -36,7 +36,7 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
             boolean matches = passwordEncoder.matches(password, userDetails.getPassword());
 
             if (matches) {
-                return JwtTokenUtils.JWT_PREFIX + JwtTokenUtils.createToken(userDetails);
+                return JwtTokenUtils.createToken(userDetails);
             }
 
             throw new BadCredentialsException("用户名或密码错误");

@@ -1,12 +1,11 @@
 package com.boot.ugo;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.boot.ugo.entity.Goods;
 import com.boot.ugo.entity.GoodsPicture;
 import com.boot.ugo.entity.vo.CategoryGoodsVo;
-import com.boot.ugo.entity.vo.HomeGoodsVo;
+import com.boot.ugo.entity.vo.GoodsVo;
 import com.boot.ugo.mapper.GoodsMapper;
 import com.boot.ugo.mapper.GoodsPictureMapper;
 import com.boot.ugo.service.GoodsService;
@@ -17,9 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * GoodsTest 商品功能测试类
@@ -49,7 +46,7 @@ public class GoodsTest {
 
     @Test
     public void getRecommendGoods() throws NotFoundException {
-        List<HomeGoodsVo> goodsVos = goodsService.getRecommendGoods();
+        List<GoodsVo> goodsVos = goodsService.getRecommendGoods();
     }
 
 

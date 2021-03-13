@@ -13,12 +13,14 @@
         <result property="status" column="status" />
     </resultMap>
 
-    <resultMap id="homeGoodsMap" type="homeGoodsVo">
-        <id column="id" property="goods.id" />
-        <result column="name" property="goods.name" />
+    <resultMap id="goodsVoMap" type="goodsVo">
+        <id column="goods_id" property="goods.id" />
+        <result column="goods_name" property="goods.name" />
         <result column="price" property="goods.price" />
         <result column="amount" property="goods.amount" />
         <result column="collect" property="goods.collect" />
+        <result column="description" property="goods.description" />
+        <result column="parent_id" property="parentId" />
 
         <collection property="picture" ofType="string" javaType="arrayList">
             <constructor>
@@ -41,15 +43,21 @@
                 <arg column="picture"></arg>
             </constructor>
         </collection>
-
     </resultMap>
 
-    <select id="getRecommendGoods" resultMap="homeGoodsMap">
-        SELECT goods.id, name, picture FROM goods JOIN goods_picture ON goods.id=goods_picture.goods_id ORDER BY RAND() LIMIT 4
+    <select id="getRecommendGoods" resultMap="goodsVoMap">
+        SELECT goods.id goods_id, name goods_name, picture FROM goods JOIN goods_picture ON goods.id=goods_picture.goods_id ORDER BY RAND() LIMIT 4
     </select>
 
     <select id="getGoodsBySort" resultMap="sortGoodsMap" parameterType="integer">
         select goods.id goods_id, goods.name goods_name, goods.price, amount, description, collect, goods_category.category_three category_id, picture from goods_category join goods on goods.id = goods_category.goods_id JOIN goods_picture on goods_picture.goods_id = goods.id where category_two = #{categoryId} and status = 'up' ORDER BY ${sort} DESC
+    </select>
+
+    <select id="getGoodsById" resultMap="goodsVoMap" parameterType="integer">
+        SELECT goods.id goods_id,name goods_name, price, amount, description, collect , category_two parent_id, picture FROM goods_picture JOIN goods on goods.id = goods_picture.goods_id JOIN goods_category ON goods.id = goods_category.goods_id where goods.id = #{goodsId} and status = 'up'
+    </select>
+    <select id="getGoodsByParentId" parameterType="integer" resultMap="goodsVoMap">
+        SELECT goods.id goods_id, goods.name goods_name, price, amount, collect, goods_category.category_two parent_id, picture from goods_category JOIN goods ON goods.id = goods_category.goods_id JOIN goods_picture ON goods.id = goods_picture.goods_id WHERE goods_category.category_two = #{parentId} and goods.`status` = 'up'
     </select>
 
 </mapper>

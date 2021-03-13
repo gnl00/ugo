@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Enumeration;
 
 /**
  * JwtTokenAuthenticationFilter 继承自 OncePerRequestFilter 每个请求都会经过这个过滤器
@@ -50,11 +51,21 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 
         log.info(request.getRequestURI());
 
+// 查看header中的元素
+//        Enumeration<String> names = request.getHeaderNames();
+//
+//        while (names.hasMoreElements()) {
+//            String name = names.nextElement();
+//            System.out.println(name);
+//        }
+
         String token = request.getHeader(JwtTokenUtils.JWT_HEADER);
+
+        log.info(token);
 
         // token不为空
         if (StringUtils.hasLength(token)) {
-            log.info(token);
+
             // 解析token
             token = token.replace(JwtTokenUtils.JWT_PREFIX, "");
 

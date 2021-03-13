@@ -36,6 +36,11 @@ public class StatusCode {
     public static final int METHOD_NOT_ALLOWED = HttpStatus.METHOD_NOT_ALLOWED.value();
 
     /**
+     * 406  NOT_ACCEPTABLE
+     */
+    public static final int NOT_ACCEPTABLE = HttpStatus.NOT_ACCEPTABLE.value();
+
+    /**
      * 503  SERVICE_UNAVAILABLE
      */
     public static final int SERVICE_UNAVAILABLE = HttpStatus.SERVICE_UNAVAILABLE.value();

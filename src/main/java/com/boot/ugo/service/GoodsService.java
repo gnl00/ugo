@@ -3,7 +3,7 @@ package com.boot.ugo.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.boot.ugo.entity.Goods;
 import com.boot.ugo.entity.vo.CategoryGoodsVo;
-import com.boot.ugo.entity.vo.HomeGoodsVo;
+import com.boot.ugo.entity.vo.GoodsVo;
 import com.boot.ugo.vo.PageResult;
 import org.apache.ibatis.javassist.NotFoundException;
 
@@ -23,7 +23,7 @@ public interface GoodsService extends IService<Goods> {
      * @author gnl
      * @return java.util.List<com.boot.ugo.entity.Goods>
      */
-    List<HomeGoodsVo> getRecommendGoods() throws NotFoundException;
+    List<GoodsVo> getRecommendGoods() throws NotFoundException;
 
     /**
      * getHomeGoods 分页获取首页选项卡数据
@@ -45,5 +45,23 @@ public interface GoodsService extends IService<Goods> {
      * @return com.boot.ugo.vo.PageResult
      */
     List<CategoryGoodsVo> getGoodsBySort(Integer categoryId,String sort);
+
+    /**
+     * getGoodsById
+     *
+     * @author gnl
+     * @param goodsId
+     * @return com.boot.ugo.entity.vo.GoodsVo
+     */
+    GoodsVo getGoodsById(Integer goodsId);
+
+    /**
+     * getByParentId
+     *
+     * @author gnl
+     * @param parentId
+     * @return java.util.List<com.boot.ugo.entity.vo.GoodsVo>
+     */
+    List<GoodsVo> getByParentId(Integer parentId);
 
 }

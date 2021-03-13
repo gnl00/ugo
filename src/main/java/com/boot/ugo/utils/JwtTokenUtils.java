@@ -18,16 +18,16 @@ import java.util.Map;
 @Getter
 public class JwtTokenUtils {
 
-    public static final String JWT_HEADER = "Authentication";
+    public static final String JWT_HEADER = "Authorization";
     public static final String JWT_PREFIX = "Bearer ";
 
     private static final String JWT_SIGN_SECRET = "sdWEV6*^.53.@#$";
     private static final String JWT_ISSUER = "gnl";
 
     /**
-     * 过期时间为1小时
+     * 过期时间为1天
      */
-    private static final Integer JWT_EXPIRATION = 1;
+    private static final Integer JWT_EXPIRATION = 24;
 
     /**
      * 记住我过期时间为7天

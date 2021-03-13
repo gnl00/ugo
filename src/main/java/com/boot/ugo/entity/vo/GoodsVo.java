@@ -9,7 +9,7 @@ import lombok.ToString;
 import java.util.List;
 
 /**
- * HomeGoodsVo
+ * GoodsVo 封装goods和goodsPicture
  *
  * @author gnl
  */
@@ -18,9 +18,14 @@ import java.util.List;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class HomeGoodsVo {
+public class GoodsVo {
 
     private Goods goods;
     private List<String> picture;
+
+    /**
+     * parentId 父级分类id 用于查找相似商品
+     */
+    private Integer parentId;
 
 }

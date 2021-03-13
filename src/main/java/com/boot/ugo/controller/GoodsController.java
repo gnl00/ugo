@@ -1,8 +1,7 @@
 package com.boot.ugo.controller;
 
-import com.boot.ugo.entity.Goods;
 import com.boot.ugo.entity.vo.CategoryGoodsVo;
-import com.boot.ugo.entity.vo.HomeGoodsVo;
+import com.boot.ugo.entity.vo.GoodsVo;
 import com.boot.ugo.service.GoodsService;
 import com.boot.ugo.vo.PageResult;
 import com.boot.ugo.vo.Result;
@@ -49,7 +48,7 @@ public class GoodsController {
         Map<String, Object> goodsMap = new HashMap<>(4);
 
         // 获取首页推荐商品数据
-        List<HomeGoodsVo> recommendGoods = goodsService.getRecommendGoods();
+        List<GoodsVo> recommendGoods = goodsService.getRecommendGoods();
         PageResult homeGoods = goodsService.getHomeGoods(type, page);
         log.info(homeGoods.toString());
 
@@ -91,6 +90,29 @@ public class GoodsController {
         }
 
         return ReturnResult.ok(goods);
+    }
+
+    @GetMapping("/{goodsId}")
+    public Result getGoodsById(@PathVariable(value = "goodsId") Integer goodsId){
+
+        Map<String, Object> goodsMap = new HashMap<>(4);
+
+        GoodsVo goods = goodsService.getGoodsById(goodsId);
+
+        if (goods == null){
+            return ReturnResult.fail(StatusCode.NOTFOUND, "获取商品详情信息失败！");
+        }
+
+        List<GoodsVo> similarGoods = null;
+        if (goods.getParentId() != null) {
+            similarGoods = goodsService.getByParentId(goods.getParentId());
+        }
+
+        goodsMap.put("goods", goods.getGoods());
+        goodsMap.put("picture", goods.getPicture());
+        goodsMap.put("similar", similarGoods);
+
+        return ReturnResult.ok(goodsMap);
     }
 
 
