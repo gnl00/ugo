@@ -24,7 +24,6 @@ import java.util.Map;
  */
 
 @Slf4j
-@CrossOrigin
 @RestController
 @RequestMapping("/ugo/goo")
 public class GoodsController {

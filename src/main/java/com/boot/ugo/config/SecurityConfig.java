@@ -1,6 +1,6 @@
 package com.boot.ugo.config;
 
-import com.boot.ugo.security.filter.CorsFilter;
+import com.boot.ugo.filter.CorsFilter;
 import com.boot.ugo.security.filter.JwtTokenAuthenticationFilter;
 import com.boot.ugo.security.handler.UserAccessDeniedHandler;
 import com.boot.ugo.security.handler.UserAuthenticationEntryPointHandler;
@@ -45,6 +45,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     UserAccessDeniedHandler userAccessDeniedHandler;
 
+    @Autowired
+    CorsFilter corsFilter;
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -75,10 +78,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(userAuthenticationEntryPointHandler)
 
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().addFilterBefore(new JwtTokenAuthenticationFilter(userDetailsService, handlerExceptionResolver), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new CorsFilter(), UsernamePasswordAuthenticationFilter.class)
-                .headers()
-                .cacheControl()
+                .and().addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtTokenAuthenticationFilter(userDetailsService, handlerExceptionResolver), UsernamePasswordAuthenticationFilter.class)
                 ;
 
     }

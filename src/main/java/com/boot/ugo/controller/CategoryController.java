@@ -22,7 +22,6 @@ import java.util.List;
  */
 
 @Slf4j
-@CrossOrigin
 @RestController
 @RequestMapping("/ugo/cat")
 public class CategoryController {

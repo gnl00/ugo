@@ -12,6 +12,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
@@ -21,7 +22,6 @@ import java.util.Map;
  */
 
 @Slf4j
-@CrossOrigin
 @RestController
 @RequestMapping("/ugo/cus")
 public class CustomerController {
@@ -68,15 +68,16 @@ public class CustomerController {
     }
 
     @PostMapping("/logout")
-    public Result logout(HttpServletRequest request) {
+    public Result logout(HttpServletResponse response) {
 
-        String token = request.getHeader(JwtTokenUtils.JWT_HEADER).replace(JwtTokenUtils.JWT_PREFIX, "");
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "GET,HEAD,POST,PUT,DELETE,OPTIONS,Patch");
 
         // 将token设置过期
         log.info("logout now...");
 
 
-        return ReturnResult.ok(token);
+        return ReturnResult.ok();
     }
 
 }

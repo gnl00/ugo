@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @Slf4j
-@CrossOrigin
 @RestController
 @RequestMapping("/ugo/cart")
 public class CartController {

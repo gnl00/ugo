@@ -1,6 +1,7 @@
 package com.boot.ugo.security.filter;
 
 import com.boot.ugo.utils.JwtTokenUtils;
+import com.boot.ugo.utils.ResponseUtils;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -22,6 +23,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * JwtTokenAuthenticationFilter 继承自 OncePerRequestFilter 每个请求都会经过这个过滤器
@@ -48,20 +51,10 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
 
         log.info("JwtTokenAuthenticationFilter ===> doFilterInternal");
-
         log.info(request.getRequestURI());
 
-// 查看header中的元素
-//        Enumeration<String> names = request.getHeaderNames();
-//
-//        while (names.hasMoreElements()) {
-//            String name = names.nextElement();
-//            System.out.println(name);
-//        }
-
         String token = request.getHeader(JwtTokenUtils.JWT_HEADER);
-
-        log.info(token);
+        log.info("token ==> " + token);
 
         // token不为空
         if (StringUtils.hasLength(token)) {
@@ -69,11 +62,17 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
             // 解析token
             token = token.replace(JwtTokenUtils.JWT_PREFIX, "");
 
-            // try catch
+            if (JwtTokenUtils.isExpiration(token)) {
+                log.info("令牌过期");
+                // 令牌过期，重新登录
+                // ...
 
-            // 令牌没过期
-            if (!JwtTokenUtils.isExpiration(token)){
+                // 抛出能被全局异常处理类捕获到的异常
+                handlerExceptionResolver.resolveException(request, response, null, new AuthenticationException("登录身份过期，请重新登录"));
+                return;
 
+            } else {
+                // 令牌没过期
                 log.info("令牌有效");
 
                 Claims claims = JwtTokenUtils.getTokenBody(token);
@@ -86,8 +85,8 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(username, null, authorities);
 
                 // 用户是否已授权
-                boolean authenticated = authentication.isAuthenticated();
-                log.info(String.valueOf(authenticated));
+                // boolean authenticated = authentication.isAuthenticated();
+                // log.info(String.valueOf(authenticated));
 
                 SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -95,16 +94,6 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
                 // String newToken = JwtTokenUtils.refreshToken(token);
                 // response.setHeader(JwtTokenUtils.JWT_HEADER, JwtTokenUtils.JWT_PREFIX + newToken);
 
-            } else {
-
-                log.info("令牌过期");
-
-                // 令牌过期，重新登录
-                // ...
-
-                // 抛出能被全局异常处理类捕获到的异常
-                handlerExceptionResolver.resolveException(request, response, null, new AuthenticationException("登录身份过期，请重新登录"));
-                return;
             }
         }
         chain.doFilter(request, response);

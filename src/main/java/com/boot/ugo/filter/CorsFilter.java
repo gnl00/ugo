@@ -1,4 +1,4 @@
-package com.boot.ugo.security.filter;
+package com.boot.ugo.filter;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
@@ -11,11 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * CorsFilter
+ * CorsFilter 跨域请求拦截器
  *
  * @author gnl
  */
 
+@Component
 public class CorsFilter extends OncePerRequestFilter {
 
     static final String ORIGIN = "Origin";
@@ -41,11 +42,6 @@ public class CorsFilter extends OncePerRequestFilter {
         } else {
             filterChain.doFilter(request, response);
         }
-    }
-
-    @Bean
-    public CorsFilter corsFilter() {
-        return new CorsFilter();
     }
 
 }

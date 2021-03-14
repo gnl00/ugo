@@ -120,7 +120,12 @@ public class JwtTokenUtils {
      * @author gnl
      */
     public static Boolean isExpiration(String token) {
-        return getTokenBody(token).getExpiration().before(calendar.getTime());
+
+        // return getTokenBody(token).getExpiration().before(calendar.getTime());
+
+        long expirationTime = getTokenBody(token).getExpiration().getTime();
+        long currentTimeMillis = System.currentTimeMillis();
+        return expirationTime < currentTimeMillis;
     }
 
     /**

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
  * @author gnl
  */
 
-@CrossOrigin
 @RestController
 @RequestMapping("/ugo/test")
 public class TestController {
