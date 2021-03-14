@@ -27,6 +27,12 @@ public class GlobalExceptionHandler {
         return ReturnResult.fail(StatusCode.NOTFOUND, exception.getMessage());
     }
 
+    @ExceptionHandler(CustomAuthorizationException.class)
+    public Result handlerCustomAuthorizationException(CustomAuthorizationException e) {
+        log.info("GlobalExceptionHandler ===> handlerCustomAuthorizationException");
+        return ReturnResult.fail(StatusCode.UNAUTHORIZED, e.getMessage());
+    }
+
     @ExceptionHandler(AuthenticationException.class)
     public Result handlerAuthenticationException(AuthenticationException exception) {
         log.info("GlobalExceptionHandler ===> handlerAuthenticationException");

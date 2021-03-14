@@ -26,4 +26,10 @@ public class Customer {
     private String mobilePhone;
     private String address;
 
+    public Customer(String nickName, String password, String gender, String email) {
+        this.nickName = nickName;
+        this.password = password;
+        this.gender = gender;
+        this.email = email;
+    }
 }

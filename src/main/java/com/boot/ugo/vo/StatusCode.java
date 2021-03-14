@@ -40,6 +40,8 @@ public class StatusCode {
      */
     public static final int NOT_ACCEPTABLE = HttpStatus.NOT_ACCEPTABLE.value();
 
+    public static final int PARAMS_EXCEPTION = 455;
+
     /**
      * 503  SERVICE_UNAVAILABLE
      */

@@ -198,4 +198,13 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
     public List<GoodsVo> getByParentId(Integer parentId) {
         return goodsMapper.getGoodsByParentId(parentId);
     }
+
+    @Override
+    public Goods queryGoodsByKeyword(String keyword) {
+
+        QueryWrapper<Goods> wrapper = new QueryWrapper<>();
+        wrapper.like("name", keyword);
+        Goods goods = goodsMapper.selectOne(wrapper);
+        return goods;
+    }
 }

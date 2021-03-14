@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+
 /**
  * CustomerServiceImpl
  *
@@ -27,11 +29,13 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @Resource
+    CustomerMapper customerMapper;
+
     @Override
     public String login(String name, String password) throws BadCredentialsException {
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(name);
-
         if (userDetails != null){
             boolean matches = passwordEncoder.matches(password, userDetails.getPassword());
 
@@ -44,6 +48,14 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
         }
 
         throw new BadCredentialsException("用户名或密码错误");
+    }
+
+    @Override
+    public int register(String nickName, String password, String email) {
+
+        Customer customer = new Customer(nickName, passwordEncoder.encode(password), "男", email);
+
+        return customerMapper.insert(customer);
     }
 
 }

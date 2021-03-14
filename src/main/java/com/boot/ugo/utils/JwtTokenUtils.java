@@ -2,7 +2,9 @@ package com.boot.ugo.utils;
 
 import io.jsonwebtoken.*;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
+import sun.rmi.runtime.Log;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -15,6 +17,7 @@ import java.util.Map;
  * @author gnl
  */
 
+@Slf4j
 @Getter
 public class JwtTokenUtils {
 
@@ -60,7 +63,7 @@ public class JwtTokenUtils {
 
     public static String createToken(UserDetails userDetails) {
 
-        Map<String, Object> map = new HashMap<>(8);
+        Map<String, Object> map = new HashMap<>(4);
         map.put("username", userDetails.getUsername());
         map.put("authorities", userDetails.getAuthorities());
 
@@ -69,6 +72,7 @@ public class JwtTokenUtils {
                 .setIssuer(JWT_ISSUER)
                 .setIssuedAt(calendar.getTime())
                 .setClaims(map)
+                .setSubject(userDetails.getUsername())
                 .setExpiration(setExpiration(JWT_EXPIRATION))
                 .compact();
     }

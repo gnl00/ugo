@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boot.ugo.mapper.CartMapper" >
+
+    <resultMap id="cartVo" type="cartVo" >
+        <result column="cart_id" property="cart.id" />
+        <result column="goods_id" property="cart.goodsId" />
+        <result column="goods_name" property="goodsName" />
+        <result column="price" property="cart.price" />
+        <result column="quantity" property="cart.quantity" />
+        <result column="total" property="cart.total" />
+
+        <collection property="picture" ofType="string" javaType="arrayList">
+            <constructor>
+                <arg column="picture"></arg>
+            </constructor>
+        </collection>
+
+    </resultMap>
+
+    <select id="getByCustomerId" resultMap="cartVo" parameterType="integer">
+        SELECT cart.id cart_id, goods.id goods_id, goods.name goods_name, goods.price, cart.quantity,goods.price * cart.quantity total,  picture FROM goods_picture join cart ON cart.goods_id = goods_picture.goods_id JOIN goods ON goods.id = cart.goods_id where cart.customer_id = #{cusId}
+    </select>
+
+</mapper>

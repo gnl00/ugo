@@ -1,5 +1,6 @@
 package com.boot.ugo.controller;
 
+import com.boot.ugo.entity.Goods;
 import com.boot.ugo.entity.vo.CategoryGoodsVo;
 import com.boot.ugo.entity.vo.GoodsVo;
 import com.boot.ugo.service.GoodsService;
@@ -67,7 +68,8 @@ public class GoodsController {
     @GetMapping("/search")
     public Result search(@RequestParam(name = "keyword") String keyword) {
         log.info(keyword);
-        return ReturnResult.ok(keyword);
+        Goods goods = goodsService.queryGoodsByKeyword(keyword);
+        return ReturnResult.ok(goods);
     }
 
     /**

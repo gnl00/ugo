@@ -21,4 +21,14 @@ public interface CustomerService extends IService<Customer> {
      */
     String login(String name, String password);
 
+    /**
+     * register
+     *
+     * @author gnl
+     * @param nickName
+     * @param password
+     * @param email
+     * @return int
+     */
+    int register(String nickName, String password, String email);
 }

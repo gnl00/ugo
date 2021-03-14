@@ -64,4 +64,12 @@ public interface GoodsService extends IService<Goods> {
      */
     List<GoodsVo> getByParentId(Integer parentId);
 
+    /**
+     * queryGoodsByKeyword
+     *
+     * @author gnl
+     * @param keyword
+     * @return com.boot.ugo.entity.Goods
+     */
+    Goods queryGoodsByKeyword(String keyword);
 }

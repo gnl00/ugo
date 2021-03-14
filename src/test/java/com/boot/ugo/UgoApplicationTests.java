@@ -35,10 +35,10 @@ class UgoApplicationTests {
     public void test2() {
         String token =
 
-                "eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE2MTU3NzM4NTksImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSx7ImF1dGhvcml0eSI6InVzZXI6dmlldyJ9XSwidXNlcm5hbWUiOiJ6c3MifQ.QRU7CAncFVVYFdhOxToc5cYS2tXuNMJhxPTR7JOPr8G9lN7yzNXwuZF6KixaLqKMRY3aYRxjhs840juyhE7IOg";
+                "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ6c3MiLCJleHAiOjE2MTU3OTA2NTAsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSx7ImF1dGhvcml0eSI6InVzZXI6dmlldyJ9XSwidXNlcm5hbWUiOiJ6c3MifQ.0A9Q1llZpmTvhiv1YsN4BmSg-hGEG1UqHKnxWmiN2SNtFzIGbmY_VxEozHo-wkgNnY8v2Yx9u8ho-0fOk8m5Rg";
 
-        Boolean expiration = JwtTokenUtils.isExpiration(token);
-        System.out.println(expiration);
+        String subject = JwtTokenUtils.getTokenSubject(token);
+        System.out.println(subject);
     }
 
 }

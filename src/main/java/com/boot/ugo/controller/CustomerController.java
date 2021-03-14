@@ -40,7 +40,17 @@ public class CustomerController {
 
         System.out.println(registerMap);
 
-        return ReturnResult.ok(registerMap);
+        String nickName = (String) registerMap.get("username");
+        String password = (String) registerMap.get("password");
+        String email = (String) registerMap.get("email");
+
+        int result = customerService.register(nickName, password, email);
+
+        if ( result != 1 ) {
+            return ReturnResult.fail(StatusCode.SERVICE_UNAVAILABLE, "操作失败！");
+        }
+
+        return ReturnResult.ok();
     }
 
     @PostMapping("/login")
