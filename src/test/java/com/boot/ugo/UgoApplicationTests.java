@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -39,6 +40,18 @@ class UgoApplicationTests {
 
         String subject = JwtTokenUtils.getTokenSubject(token);
         System.out.println(subject);
+    }
+
+    @Test
+    public void test3() {
+//        String rawSalt = "gnl";
+//        String rawPassword = "123456";
+//
+//        String salt = BCrypt.gensalt(rawSalt, rawSalt.length());
+//
+//        String hashpw = BCrypt.hashpw(rawPassword, salt);
+//
+//        System.out.println(hashpw);
     }
 
 }

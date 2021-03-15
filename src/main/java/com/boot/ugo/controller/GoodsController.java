@@ -1,6 +1,5 @@
 package com.boot.ugo.controller;
 
-import com.boot.ugo.entity.Goods;
 import com.boot.ugo.entity.vo.CategoryGoodsVo;
 import com.boot.ugo.entity.vo.GoodsVo;
 import com.boot.ugo.service.GoodsService;
@@ -66,10 +65,17 @@ public class GoodsController {
      * @return com.boot.ugo.vo.Result
      */
     @GetMapping("/search")
-    public Result search(@RequestParam(name = "keyword") String keyword) {
+    public Result search(@RequestParam(name = "keyword") String keyword,
+                         @RequestParam(name = "order") String order) {
         log.info(keyword);
-        Goods goods = goodsService.queryGoodsByKeyword(keyword);
-        return ReturnResult.ok(goods);
+        List<GoodsVo> goodsVos = goodsService.getGoodsByKeyword(keyword, order);
+
+        if (CollectionUtils.isEmpty(goodsVos)) {
+            String msg = "未找到与【"+ keyword +"】有关的商品哦~";
+            return ReturnResult.fail(StatusCode.NOTFOUND, msg);
+        }
+
+        return ReturnResult.ok(goodsVos);
     }
 
     /**

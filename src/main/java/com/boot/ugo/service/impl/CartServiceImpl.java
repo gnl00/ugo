@@ -50,7 +50,7 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements Ca
         Cart cartInDB = cartMapper.selectOne(cartWrapper);
 
         if (null == cartInDB) {
-            Cart cart = new Cart(null,cusId, goodsId, num, goods.getPrice(), goods.getPrice().multiply(BigDecimal.valueOf(num)));
+            Cart cart = new Cart(null,cusId, goodsId, num, goods.getPrice(), goods.getPrice().multiply(BigDecimal.valueOf(num)), 1);
             return cartMapper.insert(cart);
         } else {
             return modifyCart(cusId, cartInDB.getId(),num);

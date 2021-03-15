@@ -4,7 +4,7 @@ spring:
   application:
     name: ugo - a online shopping platform
   datasource:
-    url: jdbc:mysql:///ugo?useSSL=false
+    url: jdbc:mysql:///ugo?useSSL=false&characterEncoding=utf8
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver

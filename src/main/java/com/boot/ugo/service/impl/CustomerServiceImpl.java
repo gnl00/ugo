@@ -6,9 +6,12 @@ import com.boot.ugo.mapper.CustomerMapper;
 import com.boot.ugo.security.impl.UserDetailsServiceImpl;
 import com.boot.ugo.service.CustomerService;
 import com.boot.ugo.utils.JwtTokenUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +23,11 @@ import javax.annotation.Resource;
  * @author gnl
  */
 
+@Slf4j
 @Service
 public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> implements CustomerService {
+
+    static final String SALT = "asfnGEAw32$#@%123TEQse";
 
     @Autowired
     UserDetailsServiceImpl userDetailsService;
@@ -34,9 +40,10 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
 
     @Override
     public String login(String name, String password) throws BadCredentialsException {
-
         UserDetails userDetails = userDetailsService.loadUserByUsername(name);
+
         if (userDetails != null){
+
             boolean matches = passwordEncoder.matches(password, userDetails.getPassword());
 
             if (matches) {
@@ -53,7 +60,7 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
     @Override
     public int register(String nickName, String password, String email) {
 
-        Customer customer = new Customer(nickName, passwordEncoder.encode(password), "男", email);
+        Customer customer = new Customer(nickName, password, "男", email);
 
         return customerMapper.insert(customer);
     }

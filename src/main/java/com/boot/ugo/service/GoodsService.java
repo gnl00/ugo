@@ -65,11 +65,12 @@ public interface GoodsService extends IService<Goods> {
     List<GoodsVo> getByParentId(Integer parentId);
 
     /**
-     * queryGoodsByKeyword
+     * getGoodsByKeyword
      *
      * @author gnl
      * @param keyword
-     * @return com.boot.ugo.entity.Goods
+     * @param order
+     * @return java.util.List<com.boot.ugo.entity.vo.GoodsVo>
      */
-    Goods queryGoodsByKeyword(String keyword);
+    List<GoodsVo> getGoodsByKeyword(String keyword, String order);
 }

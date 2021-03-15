@@ -44,6 +44,9 @@ public class CustomerController {
         String password = (String) registerMap.get("password");
         String email = (String) registerMap.get("email");
 
+        // log.info(nickName);
+        // log.info(password);
+
         int result = customerService.register(nickName, password, email);
 
         if ( result != 1 ) {
@@ -55,13 +58,13 @@ public class CustomerController {
 
     @PostMapping("/login")
     public Result login(@RequestBody Map<String, Object> map){
-        log.info(map.toString());
+        // log.info(map.toString());
 
         String name = (String) map.get("username");
         String password = (String) map.get("password");
 
-        log.info(name);
-        log.info(password);
+        // log.info(name);
+        // log.info(password);
 
         try {
             String token = customerService.login(name, password);
@@ -79,13 +82,8 @@ public class CustomerController {
 
     @PostMapping("/logout")
     public Result logout(HttpServletResponse response) {
-
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Methods", "GET,HEAD,POST,PUT,DELETE,OPTIONS,Patch");
-
         // 将token设置过期
         log.info("logout now...");
-
 
         return ReturnResult.ok();
     }

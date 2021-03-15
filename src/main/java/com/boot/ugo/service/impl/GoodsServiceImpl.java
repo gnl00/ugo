@@ -1,6 +1,7 @@
 package com.boot.ugo.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.enums.SqlLike;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.boot.ugo.entity.Goods;
@@ -200,11 +201,30 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
     }
 
     @Override
-    public Goods queryGoodsByKeyword(String keyword) {
+    public List<GoodsVo> getGoodsByKeyword(String keyword, String order) {
 
-        QueryWrapper<Goods> wrapper = new QueryWrapper<>();
-        wrapper.like("name", keyword);
-        Goods goods = goodsMapper.selectOne(wrapper);
-        return goods;
+        String orderToMapper = "";
+
+        switch (order) {
+            case "default":
+
+                orderToMapper = "goods.id";
+
+                break;
+            case "price":
+
+                orderToMapper = "goods.price";
+
+                break;
+            case "collect":
+
+                orderToMapper = "goods.collect";
+
+                break;
+            default:
+                orderToMapper = "goods.id";
+        }
+
+        return goodsMapper.getGoodsByKeyword(keyword, orderToMapper);
     }
 }

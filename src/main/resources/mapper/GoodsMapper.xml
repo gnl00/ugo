@@ -60,4 +60,8 @@
         SELECT goods.id goods_id, goods.name goods_name, price, amount, collect, goods_category.category_two parent_id, picture from goods_category JOIN goods ON goods.id = goods_category.goods_id JOIN goods_picture ON goods.id = goods_picture.goods_id WHERE goods_category.category_two = #{parentId} and goods.`status` = 'up'
     </select>
 
+    <select id="getGoodsByKeyword" resultMap="goodsVoMap" parameterType="string">
+        SELECT goods.id goods_id,name goods_name, price,amount,description,collect,picture FROM goods JOIN goods_picture on goods.id = goods_picture.goods_id where name like "%"#{keyword}"%" and status = 'up' order by #{order} DESC
+    </select>
+
 </mapper>

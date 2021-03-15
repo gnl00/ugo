@@ -50,4 +50,15 @@ public interface GoodsMapper extends BaseMapper<Goods> {
      * @return java.util.List<com.boot.ugo.entity.vo.GoodsVo>
      */
     List<GoodsVo> getGoodsByParentId(Integer parentId);
+
+    /**
+     * getGoodsByKeyword
+     *
+     * @author gnl
+     * @param keyword
+     * @param order
+     * @return java.util.List<com.boot.ugo.entity.vo.GoodsVo>
+     */
+    List<GoodsVo> getGoodsByKeyword(String keyword, String order);
+
 }

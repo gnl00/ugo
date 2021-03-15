@@ -37,6 +37,10 @@ public class GoodsTest {
     GoodsService goodsService;
 
     @Test
+    public void testSearch() {
+    }
+
+    @Test
     public void testPictureMapper() {
         QueryWrapper<GoodsPicture> wrapper = new QueryWrapper<>();
         wrapper.eq("goods_id", 1).last("limit 1");

@@ -32,7 +32,7 @@ public class CorsFilter extends OncePerRequestFilter {
         // * or origin as u prefer
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Credentials", "true");
-        response.setHeader("Access-Control-Allow-Methods", "PUT, POST, GET, OPTIONS, DELETE");
+        response.setHeader("Access-Control-Allow-Methods", "PUT, POST, GET, OPTIONS, DELETE, PATCH");
         response.setHeader("Access-Control-Max-Age", "3600");
         // Authorization header中自定义的token位置
         response.setHeader("Access-Control-Allow-Headers", "content-type, Authorization");

@@ -1,6 +1,7 @@
 package com.boot.ugo.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.boot.ugo.entity.Cart;
 import com.boot.ugo.entity.Customer;
 import com.boot.ugo.entity.vo.CartVo;
 import com.boot.ugo.service.CartService;
@@ -16,8 +17,11 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * CartController
@@ -110,12 +114,76 @@ public class CartController {
     }
 
     /**
+     * 修改购物车的选中状态
+     *
+     * @author gnl
+     * @param map
+     * @return com.boot.ugo.vo.Result
+     */
+    @PatchMapping("/check")
+    public Result checkCart(@RequestBody Map<String, Object> map) {
+
+        // 得到前端传过来的已经选中的cartId
+        List<Integer> checkedIds = (List<Integer>) map.get("cart_ids");
+        log.info(checkedIds.toString());
+
+        List<Cart> finalCartList = new ArrayList<>();
+
+        // 获取到数据库中所有的cart
+        List<Cart> carts = cartService.list();
+        List<Integer> cartIdsInDB = carts.stream().map(Cart::getId).collect(Collectors.toList());
+        log.info(cartIdsInDB.toString());
+        // 利用filter筛选出未选中的cartId
+        List<Integer> unCheckedIds = cartIdsInDB.stream().filter(id -> !checkedIds.contains(id)).collect(Collectors.toList());
+
+        List<Cart> checkedCartList = cartService.listByIds(checkedIds);
+
+        if (!CollectionUtils.isEmpty(unCheckedIds)) {
+            List<Cart> uncheckedCartList = cartService.listByIds(unCheckedIds);
+            // 未选中的设为0
+            uncheckedCartList.forEach(cart -> cart.setIsChecked(0));
+            finalCartList.addAll(uncheckedCartList);
+        }
+
+        // 将选中的设为1
+        checkedCartList.forEach(cart -> cart.setIsChecked(1));
+
+        finalCartList.addAll(checkedCartList);
+        boolean updateBatchById = cartService.updateBatchById(finalCartList);
+
+        if (updateBatchById) {
+            return ReturnResult.ok();
+        } else {
+            return ReturnResult.fail(StatusCode.SERVICE_UNAVAILABLE, "操作失败");
+        }
+
+    }
+
+    /**
+     * deleteCartItem
+     *
+     * @author gnl
+     * @return com.boot.ugo.vo.Result
+     */
+    @DeleteMapping()
+    public Result deleteCartItem(@RequestBody Map<String, Object> map) {
+        Integer cartId = (Integer) map.get("cartId");
+        boolean removeSuccess = cartService.removeById(cartId);
+
+        if (removeSuccess) {
+            return  ReturnResult.ok();
+        }
+
+        return ReturnResult.fail(StatusCode.SERVICE_UNAVAILABLE, "操作失败");
+    }
+
+    /**
      * 清空购物车
      *
      * @author gnl
      * @return com.boot.ugo.vo.Result
      */
-    @DeleteMapping
+    @DeleteMapping("/clear")
     public Result clear(HttpServletRequest request) {
 
         log.info("... cart clear");

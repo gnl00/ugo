@@ -49,4 +49,9 @@ public class Cart {
      */
     private BigDecimal total;
 
+    /**
+     * 购物车中的商品是否被选中
+     */
+    private int isChecked;
+
 }
