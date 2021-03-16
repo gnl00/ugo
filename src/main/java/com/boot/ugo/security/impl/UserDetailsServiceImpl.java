@@ -42,7 +42,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
             // 加载用户基础信息
             QueryWrapper<Customer> wrapper = new QueryWrapper<>();
-            wrapper.eq("nick_name", username);
+            wrapper.eq("username", username);
             Customer customer = customerMapper.selectOne(wrapper);
 
             if (customer != null){

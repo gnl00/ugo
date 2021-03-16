@@ -50,7 +50,7 @@
     </select>
 
     <select id="getGoodsBySort" resultMap="sortGoodsMap" parameterType="integer">
-        select goods.id goods_id, goods.name goods_name, goods.price, amount, description, collect, goods_category.category_three category_id, picture from goods_category join goods on goods.id = goods_category.goods_id JOIN goods_picture on goods_picture.goods_id = goods.id where category_two = #{categoryId} and status = 'up' ORDER BY ${sort} DESC
+        select goods.id goods_id, goods.name goods_name, goods.price, amount, description, collect, goods_category.category_three category_id, picture from goods_category join goods on goods.id = goods_category.goods_id JOIN goods_picture on goods_picture.goods_id = goods.id where category_two = #{categoryId} and status = 'up' ORDER BY ${sort} ASC
     </select>
 
     <select id="getGoodsById" resultMap="goodsVoMap" parameterType="integer">

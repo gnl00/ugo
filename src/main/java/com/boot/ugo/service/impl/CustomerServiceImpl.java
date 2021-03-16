@@ -58,9 +58,9 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
     }
 
     @Override
-    public int register(String nickName, String password, String email) {
+    public int register(String username, String password, String email) {
 
-        Customer customer = new Customer(nickName, password, "男", email);
+        Customer customer = new Customer(username, password, email);
 
         return customerMapper.insert(customer);
     }

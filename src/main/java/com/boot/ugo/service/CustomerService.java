@@ -25,10 +25,10 @@ public interface CustomerService extends IService<Customer> {
      * register
      *
      * @author gnl
-     * @param nickName
+     * @param username
      * @param password
      * @param email
      * @return int
      */
-    int register(String nickName, String password, String email);
+    int register(String username, String password, String email);
 }

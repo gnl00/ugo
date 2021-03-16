@@ -1,18 +1,24 @@
 package com.boot.ugo.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.boot.ugo.entity.Customer;
+import com.boot.ugo.entity.CustomerAddress;
+import com.boot.ugo.entity.vo.CustomerAddressVo;
+import com.boot.ugo.service.CustomerAddressService;
 import com.boot.ugo.service.CustomerService;
 import com.boot.ugo.utils.JwtTokenUtils;
 import com.boot.ugo.vo.Result;
 import com.boot.ugo.vo.ReturnResult;
 import com.boot.ugo.vo.StatusCode;
-import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,6 +34,9 @@ public class CustomerController {
 
     @Autowired
     CustomerService customerService;
+
+    @Autowired
+    CustomerAddressService addressService;
 
     @GetMapping("/hello")
     public String hello(){
@@ -86,6 +95,24 @@ public class CustomerController {
         log.info("logout now...");
 
         return ReturnResult.ok();
+    }
+
+    public Customer getUserFromToken(HttpServletRequest request) {
+
+        String token = request.getHeader(JwtTokenUtils.JWT_HEADER).replace(JwtTokenUtils.JWT_PREFIX, "");
+
+        String username = JwtTokenUtils.getTokenSubject(token);
+
+        QueryWrapper<Customer> wrapper = new QueryWrapper<>();
+        wrapper.eq("username", username);
+
+        Customer customer = customerService.getOne(wrapper);
+
+        if (customer != null ) {
+            return customer;
+        } else {
+            return  null;
+        }
     }
 
 }

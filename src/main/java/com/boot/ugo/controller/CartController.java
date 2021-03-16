@@ -40,6 +40,9 @@ public class CartController {
     @Autowired
     CustomerService customerService;
 
+    @Autowired
+    CustomerController customerController;
+
     /**
      * 查看购物车
      *
@@ -50,7 +53,7 @@ public class CartController {
     public Result viewCart(HttpServletRequest request) {
         log.info("... cart viewCart");
 
-        Customer cartOwner = getCartOwner(request);
+        Customer cartOwner = customerController.getUserFromToken(request);
 
         List<CartVo> cartVos = cartService.queryByCustomerId(cartOwner.getId());
 
@@ -74,7 +77,7 @@ public class CartController {
 
         log.info(map.toString());
 
-        Customer cartOwner = getCartOwner(request);
+        Customer cartOwner = customerController.getUserFromToken(request);
 
         Integer goodsId = (Integer) map.get("goodsId");
         Integer num = (Integer) map.get("num");
@@ -102,7 +105,7 @@ public class CartController {
 
         Integer num = (Integer) map.get("num");
 
-        Customer cartOwner = getCartOwner(request);
+        Customer cartOwner = customerController.getUserFromToken(request);
 
         int result = cartService.modifyCart(cartOwner.getId(), cartId, num);
 
@@ -188,28 +191,10 @@ public class CartController {
 
         log.info("... cart clear");
 
-        Customer cartOwner = getCartOwner(request);
+        Customer cartOwner = customerController.getUserFromToken(request);
 
         return ReturnResult.ok();
     }
 
-    /**
-     * 从token中获取到用户信息
-     *
-     * @author gnl
-     * @param request
-     * @return com.boot.ugo.entity.Customer
-     */
-    private Customer getCartOwner(HttpServletRequest request) {
-
-        String token = request.getHeader(JwtTokenUtils.JWT_HEADER).replace(JwtTokenUtils.JWT_PREFIX, "");
-        String username = JwtTokenUtils.getTokenSubject(token);
-
-        QueryWrapper<Customer> wrapper = new QueryWrapper<>();
-        wrapper.eq("nick_name", username);
-        Customer cartOwner = customerService.getOne(wrapper);
-
-        return cartOwner;
-    }
 
 }

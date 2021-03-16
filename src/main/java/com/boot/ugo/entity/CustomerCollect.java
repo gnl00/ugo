@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /**
- * Customer 用户实体类
+ * CustomerCollect 用户商品收藏实体类
  *
  * @author gnl
  */
@@ -17,17 +17,11 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class Customer {
+public class CustomerCollect {
 
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
-    private String username;
-    private String password;
-    private String email;
+    private Integer customerId;
+    private Integer goodsId;
 
-    public Customer(String username, String password, String email) {
-        this.username = username;
-        this.password = password;
-        this.email = email;
-    }
 }
