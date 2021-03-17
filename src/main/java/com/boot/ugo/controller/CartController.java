@@ -51,17 +51,29 @@ public class CartController {
      */
     @GetMapping
     public Result viewCart(HttpServletRequest request) {
-        log.info("... cart viewCart");
 
         Customer cartOwner = customerController.getUserFromToken(request);
 
         List<CartVo> cartVos = cartService.queryByCustomerId(cartOwner.getId());
 
         if (CollectionUtils.isEmpty(cartVos)) {
-            return ReturnResult.fail(StatusCode.SERVICE_UNAVAILABLE, "操作失败");
+            return ReturnResult.fail(StatusCode.NOTFOUND, "操作失败");
         }
 
         return ReturnResult.ok(cartVos);
+    }
+
+    @GetMapping("/checked")
+    public Result getCheckedCartItem(HttpServletRequest request) {
+
+        Customer customer = customerController.getUserFromToken(request);
+        List<CartVo> cartVos = cartService.getCheckedCartItem(customer.getId());
+
+        if (!CollectionUtils.isEmpty(cartVos)) {
+            return ReturnResult.ok(cartVos);
+        }
+
+        return ReturnResult.fail(StatusCode.NOTFOUND, "操作失败");
     }
 
     /**
@@ -73,9 +85,6 @@ public class CartController {
      */
     @PostMapping
     public Result addCart(@RequestBody Map<String, Object> map, HttpServletRequest request) {
-        log.info("... cart addCart");
-
-        log.info(map.toString());
 
         Customer cartOwner = customerController.getUserFromToken(request);
 
@@ -101,7 +110,6 @@ public class CartController {
     public Result modifyCart(@PathVariable(value = "cartId") Integer cartId,
                              @RequestBody Map<String, Object> map,
                              HttpServletRequest request) {
-        log.info("... cart modifyCart");
 
         Integer num = (Integer) map.get("num");
 
@@ -128,14 +136,13 @@ public class CartController {
 
         // 得到前端传过来的已经选中的cartId
         List<Integer> checkedIds = (List<Integer>) map.get("cart_ids");
-        log.info(checkedIds.toString());
 
         List<Cart> finalCartList = new ArrayList<>();
 
         // 获取到数据库中所有的cart
         List<Cart> carts = cartService.list();
         List<Integer> cartIdsInDB = carts.stream().map(Cart::getId).collect(Collectors.toList());
-        log.info(cartIdsInDB.toString());
+
         // 利用filter筛选出未选中的cartId
         List<Integer> unCheckedIds = cartIdsInDB.stream().filter(id -> !checkedIds.contains(id)).collect(Collectors.toList());
 
@@ -188,8 +195,6 @@ public class CartController {
      */
     @DeleteMapping("/clear")
     public Result clear(HttpServletRequest request) {
-
-        log.info("... cart clear");
 
         Customer cartOwner = customerController.getUserFromToken(request);
 

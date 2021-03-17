@@ -24,6 +24,15 @@ public interface CartService extends IService<Cart> {
     List<CartVo> queryByCustomerId(Integer cusId);
 
     /**
+     * getCheckedCartItem 根据用户id查询 被勾选的购物车商品
+     *
+     * @author gnl
+     * @param cusId
+     * @return java.util.List<com.boot.ugo.entity.vo.CartVo>
+     */
+    List<CartVo> getCheckedCartItem(Integer cusId);
+
+    /**
      * addCart 新增购物车条目
      *
      * @author gnl

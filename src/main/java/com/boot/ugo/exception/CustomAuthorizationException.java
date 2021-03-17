@@ -1,7 +1,7 @@
 package com.boot.ugo.exception;
 
 /**
- * TODO
+ * CustomAuthorizationException
  *
  * @author gnl
  */

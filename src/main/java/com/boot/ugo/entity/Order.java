@@ -2,6 +2,7 @@ package com.boot.ugo.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ import java.util.Date;
  * @author gnl
  */
 
+@TableName(value = "customer_order")
 @Data
 @ToString
 @AllArgsConstructor
@@ -28,7 +30,7 @@ public class Order {
     /**
      * 订单明细Id
      */
-    private Integer orderDetailId;
+    private Integer detailId;
 
     /**
      * 订单所属用户Id
@@ -36,43 +38,39 @@ public class Order {
     private Integer customerId;
 
     /**
-     * 购买商品总数
-     */
-    private Integer quantity;
-
-    /**
-     * 订单总额
-     */
-    private BigDecimal total;
-
-    /**
      * 下单日期
      */
-    private Date orderDate;
-
-    /**
-     * 订单状态
-     * 1. 未支付，未完成
-     * 2. 已支付，未完成
-     * 3. 已支付，已完成
-     */
-    private String orderStatus;
+    private long orderTime;
 
     /**
      * 订单支付状态
-     * 1. yes
-     * 2. no
+     * 1 已支付
+     * 0 未支付
      */
-    private String paymentStatus;
+    private int paymentStatus;
 
     /**
      * 订单支付时间
      */
-    private Date paymentTime;
+    private long paymentTime;
 
     /**
      * 订单结单日期
      */
-    private Date endDate;
+    private long endTime;
 
+    /**
+     * 订单状态
+     * 0 未支付，未完成
+     * 1 已支付，未完成
+     * 2 已支付，已完成
+     */
+    private int orderStatus;
+
+
+    public Order(Integer detailId, Integer customerId, long orderTime) {
+        this.detailId = detailId;
+        this.customerId = customerId;
+        this.orderTime = orderTime;
+    }
 }

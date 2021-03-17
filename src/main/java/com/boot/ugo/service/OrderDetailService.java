@@ -10,4 +10,14 @@ import com.boot.ugo.entity.OrderDetail;
  */
 
 public interface OrderDetailService extends IService<OrderDetail> {
+
+    /**
+     * insertAndReturnId 保存商品明细 并返回自增的id
+     *
+     * @author gnl
+     * @param detail
+     * @return int
+     */
+    int saveAndReturnId(OrderDetail detail);
+
 }

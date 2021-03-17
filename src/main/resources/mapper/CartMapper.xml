@@ -24,4 +24,8 @@
         SELECT cart.id cart_id, goods.id goods_id, goods.name goods_name, goods.price, cart.quantity,goods.price * cart.quantity total,cart.is_checked,picture FROM goods_picture join cart ON cart.goods_id = goods_picture.goods_id JOIN goods ON goods.id = cart.goods_id where cart.customer_id = #{cusId}
     </select>
 
+    <select id="getCheckedCartItem" resultMap="cartVo">
+        SELECT cart.id cart_id, goods.id goods_id, goods.name goods_name, goods.price, cart.quantity,goods.price * cart.quantity total,cart.is_checked,picture FROM goods_picture join cart ON cart.goods_id = goods_picture.goods_id JOIN goods ON goods.id = cart.goods_id where cart.customer_id = #{cusId} and cart.is_checked = 1
+    </select>
+
 </mapper>

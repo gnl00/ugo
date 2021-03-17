@@ -54,4 +54,9 @@ class UgoApplicationTests {
 //        System.out.println(hashpw);
     }
 
+    @Test
+    public void test4() {
+        System.out.println(System.currentTimeMillis());
+    }
+
 }

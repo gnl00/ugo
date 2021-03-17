@@ -39,6 +39,11 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements Ca
     }
 
     @Override
+    public List<CartVo> getCheckedCartItem(Integer cusId) {
+        return cartMapper.getCheckedCartItem(cusId);
+    }
+
+    @Override
     public int addCart(Integer cusId, Integer goodsId, Integer num) {
 
         QueryWrapper<Goods> goodsWrapper = new QueryWrapper<>();

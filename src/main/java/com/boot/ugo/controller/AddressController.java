@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -45,9 +46,9 @@ public class AddressController {
             if (null != vo) {
                 return ReturnResult.ok(vo);
             }
-            return ReturnResult.fail(StatusCode.SERVICE_UNAVAILABLE, "操作失败");
+            return ReturnResult.fail(StatusCode.NOTFOUND, "操作失败");
         }
-        return ReturnResult.fail(StatusCode.SERVICE_UNAVAILABLE, "操作失败");
+        return ReturnResult.fail(StatusCode.NOTFOUND, "操作失败");
 
     }
 
@@ -59,7 +60,21 @@ public class AddressController {
         if (address != null) {
             return ReturnResult.ok(address);
         }
-        return ReturnResult.fail(StatusCode.SERVICE_UNAVAILABLE, "操作失败");
+        return ReturnResult.fail(StatusCode.NOTFOUND, "操作失败");
+    }
+
+    @GetMapping("/default")
+    public Result getDefaultAddress(HttpServletRequest request) {
+
+        QueryWrapper<CustomerAddress> wrapper = new QueryWrapper<>();
+        wrapper.eq("is_default", 1);
+        CustomerAddress address = addressService.getOne(wrapper);
+
+        if (address != null) {
+            return  ReturnResult.ok(address);
+        }
+
+        return ReturnResult.fail(StatusCode.NOTFOUND, "操作失败");
     }
 
     @PostMapping
@@ -102,7 +117,7 @@ public class AddressController {
             return ReturnResult.ok();
         }
 
-        return ReturnResult.fail(StatusCode.SERVICE_UNAVAILABLE, "操作失败");
+        return ReturnResult.fail(StatusCode.NOTFOUND, "操作失败");
     }
 
     @DeleteMapping("/del/{addId}")
