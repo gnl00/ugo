@@ -65,7 +65,6 @@ public class OrderController {
         List<Order> orderList = new ArrayList<>();
 
         boolean saveGoods = false;
-        boolean saveDetail = false;
         boolean saveOrder = false;
 
         long orderTime = System.currentTimeMillis();
@@ -111,7 +110,7 @@ public class OrderController {
         // 将下单的商品从购物车删除
         boolean removeFromCart = cartService.removeByIds(checkedIds);
 
-        if (saveGoods && saveDetail && saveOrder && removeFromCart && !CollectionUtils.isEmpty(cartVos)) {
+        if (saveGoods && saveOrder && removeFromCart && !CollectionUtils.isEmpty(cartVos)) {
             return ReturnResult.ok(cartVos);
         }
 

@@ -24,4 +24,8 @@ public class CustomerCollect {
     private Integer customerId;
     private Integer goodsId;
 
+    public CustomerCollect(Integer customerId, Integer goodsId) {
+        this.customerId = customerId;
+        this.goodsId = goodsId;
+    }
 }

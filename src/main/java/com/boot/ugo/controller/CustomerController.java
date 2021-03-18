@@ -2,8 +2,6 @@ package com.boot.ugo.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.boot.ugo.entity.Customer;
-import com.boot.ugo.entity.CustomerAddress;
-import com.boot.ugo.entity.vo.CustomerAddressVo;
 import com.boot.ugo.service.CustomerAddressService;
 import com.boot.ugo.service.CustomerService;
 import com.boot.ugo.utils.JwtTokenUtils;
@@ -12,12 +10,12 @@ import com.boot.ugo.vo.ReturnResult;
 import com.boot.ugo.vo.StatusCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -53,9 +51,6 @@ public class CustomerController {
         String password = (String) registerMap.get("password");
         String email = (String) registerMap.get("email");
 
-        // log.info(nickName);
-        // log.info(password);
-
         int result = customerService.register(nickName, password, email);
 
         if ( result != 1 ) {
@@ -67,13 +62,9 @@ public class CustomerController {
 
     @PostMapping("/login")
     public Result login(@RequestBody Map<String, Object> map){
-        // log.info(map.toString());
 
         String name = (String) map.get("username");
         String password = (String) map.get("password");
-
-        // log.info(name);
-        // log.info(password);
 
         try {
             String token = customerService.login(name, password);
@@ -81,12 +72,19 @@ public class CustomerController {
             if (StringUtils.hasLength(token)){
                 return ReturnResult.ok(token);
             }
-
             return ReturnResult.fail(StatusCode.UNAUTHORIZED, "登录失败");
 
         } catch (Exception exception) {
             return ReturnResult.fail(StatusCode.UNAUTHORIZED, exception.getMessage());
         }
+    }
+
+    @GetMapping("/info")
+    public Result getUserInfo(HttpServletRequest request) {
+
+        Customer customer = getUserFromToken(request);
+
+        return ReturnResult.ok(customer.getUsername());
     }
 
     @PostMapping("/logout")
