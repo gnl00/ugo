@@ -61,7 +61,7 @@
     </select>
 
     <select id="getGoodsByKeyword" resultMap="goodsVoMap" parameterType="string">
-        SELECT goods.id goods_id,name goods_name, price,amount,description,collect,picture FROM goods JOIN goods_picture on goods.id = goods_picture.goods_id where name like "%"#{keyword}"%" and status = 'up' order by #{order} DESC
+        SELECT goods.id goods_id,name goods_name, price,amount,description,collect,picture FROM goods JOIN goods_picture on goods.id = goods_picture.goods_id where name like "%"#{keyword}"%" and status = 'up' order by #{order} ASC
     </select>
 
 </mapper>

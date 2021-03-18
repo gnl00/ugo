@@ -68,6 +68,8 @@ public class GoodsController {
     public Result search(@RequestParam(name = "keyword") String keyword,
                          @RequestParam(name = "order") String order) {
         log.info(keyword);
+        log.info(order);
+
         List<GoodsVo> goodsVos = goodsService.getGoodsByKeyword(keyword, order);
 
         if (CollectionUtils.isEmpty(goodsVos)) {

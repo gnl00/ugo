@@ -1,7 +1,6 @@
 package com.boot.ugo.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.enums.SqlLike;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.boot.ugo.entity.Goods;
@@ -20,7 +19,9 @@ import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 /**
@@ -204,27 +205,30 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
     public List<GoodsVo> getGoodsByKeyword(String keyword, String order) {
 
         String orderToMapper = "";
+        List<GoodsVo> goodsVos = null;
+        List<GoodsVo> sorted = null;
 
         switch (order) {
-            case "default":
-
-                orderToMapper = "goods.id";
-
-                break;
             case "price":
 
                 orderToMapper = "goods.price";
+                goodsVos = goodsMapper.getGoodsByKeyword(keyword, orderToMapper);
+                sorted = goodsVos.stream().sorted(Comparator.comparing(goodsVo -> goodsVo.getGoods().getPrice())).collect(Collectors.toList());
 
                 break;
             case "collect":
 
                 orderToMapper = "goods.collect";
+                goodsVos = goodsMapper.getGoodsByKeyword(keyword, orderToMapper);
+                sorted = goodsVos.stream().sorted(Comparator.comparing(goodsVo -> goodsVo.getGoods().getCollect())).collect(Collectors.toList());
 
                 break;
             default:
                 orderToMapper = "goods.id";
+                goodsVos = goodsMapper.getGoodsByKeyword(keyword, orderToMapper);
+                sorted = goodsVos.stream().sorted(Comparator.comparing(goodsVo -> goodsVo.getGoods().getId())).collect(Collectors.toList());
         }
 
-        return goodsMapper.getGoodsByKeyword(keyword, orderToMapper);
+        return sorted;
     }
 }
