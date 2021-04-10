@@ -54,7 +54,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
                 List<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList("ROLE_USER", "user:view");
 
-                return new org.springframework.security.core.userdetails.User(username, passwordEncoder.encode(customer.getPassword()), authorities);
+                return new org.springframework.security.core.userdetails.User(username, customer.getPassword(), authorities);
 
             }
             throw new UsernameNotFoundException("用户不存在");

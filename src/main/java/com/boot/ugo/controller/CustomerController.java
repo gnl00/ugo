@@ -4,7 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.boot.ugo.entity.Customer;
 import com.boot.ugo.service.CustomerAddressService;
 import com.boot.ugo.service.CustomerService;
-import com.boot.ugo.utils.JwtTokenUtils;
+import com.boot.ugo.util.JwtTokenUtils;
+import com.boot.ugo.util.PasswordUtils;
 import com.boot.ugo.vo.Result;
 import com.boot.ugo.vo.ReturnResult;
 import com.boot.ugo.vo.StatusCode;
@@ -15,8 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -42,16 +41,20 @@ public class CustomerController {
     }
 
     @PostMapping("/register")
-    public Result register(@RequestBody Map<String, Object> registerMap) {
+    public Result register(@RequestBody Map<String, Object> registerMap) throws Exception {
         // 200 405
 
         System.out.println(registerMap);
 
         String nickName = (String) registerMap.get("username");
-        String password = (String) registerMap.get("password");
+        String encodedPassword = (String) registerMap.get("password");
         String email = (String) registerMap.get("email");
 
-        int result = customerService.register(nickName, password, email);
+        String decodedPassword = PasswordUtils.aesDecoded(encodedPassword);
+
+        // System.out.println("解密: " + decodedPassword);
+
+        int result = customerService.register(nickName, decodedPassword, email);
 
         if ( result != 1 ) {
             return ReturnResult.fail(StatusCode.SERVICE_UNAVAILABLE, "操作失败！");
@@ -61,13 +64,16 @@ public class CustomerController {
     }
 
     @PostMapping("/login")
-    public Result login(@RequestBody Map<String, Object> map){
+    public Result login(@RequestBody Map<String, Object> map) throws Exception {
 
         String name = (String) map.get("username");
-        String password = (String) map.get("password");
+        String encodedPassword = (String) map.get("password");
+
+        String decodedPassword = PasswordUtils.aesDecoded(encodedPassword);
+        // System.out.println("decodedPassword: " + decodedPassword);
 
         try {
-            String token = customerService.login(name, password);
+            String token = customerService.login(name, decodedPassword);
 
             if (StringUtils.hasLength(token)){
                 return ReturnResult.ok(token);
@@ -81,9 +87,7 @@ public class CustomerController {
 
     @GetMapping("/info")
     public Result getUserInfo(HttpServletRequest request) {
-
         Customer customer = getUserFromToken(request);
-
         return ReturnResult.ok(customer.getUsername());
     }
 

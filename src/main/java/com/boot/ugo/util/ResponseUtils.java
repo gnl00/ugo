@@ -1,4 +1,4 @@
-package com.boot.ugo.utils;
+package com.boot.ugo.util;
 
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 

@@ -1,6 +1,5 @@
 package com.boot.ugo.filter;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -19,7 +18,7 @@ import java.io.IOException;
 @Component
 public class CorsFilter extends OncePerRequestFilter {
 
-    static final String ORIGIN = "Origin";
+    // static final String ORIGIN = "Origin";
     static final String OPTIONS = "OPTIONS";
 
     @Override

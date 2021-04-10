@@ -1,6 +1,6 @@
 package com.boot.ugo.security.handler;
 
-import com.boot.ugo.utils.ResponseUtils;
+import com.boot.ugo.util.ResponseUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;

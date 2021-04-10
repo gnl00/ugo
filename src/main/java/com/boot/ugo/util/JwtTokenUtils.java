@@ -1,10 +1,9 @@
-package com.boot.ugo.utils;
+package com.boot.ugo.util;
 
 import io.jsonwebtoken.*;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
-import sun.rmi.runtime.Log;
 
 import java.util.Calendar;
 import java.util.Date;

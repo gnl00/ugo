@@ -1,7 +1,6 @@
 package com.boot.ugo.security.filter;
 
-import com.boot.ugo.utils.JwtTokenUtils;
-import com.boot.ugo.utils.ResponseUtils;
+import com.boot.ugo.util.JwtTokenUtils;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -22,9 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * JwtTokenAuthenticationFilter 继承自 OncePerRequestFilter 每个请求都会经过这个过滤器
@@ -50,8 +46,8 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
 
-        log.info("JwtTokenAuthenticationFilter ===> doFilterInternal");
-        log.info(request.getRequestURI());
+        // log.info("JwtTokenAuthenticationFilter ===> doFilterInternal");
+        // log.info(request.getRequestURI());
 
         String token = request.getHeader(JwtTokenUtils.JWT_HEADER);
         log.info("token ==> " + token);
