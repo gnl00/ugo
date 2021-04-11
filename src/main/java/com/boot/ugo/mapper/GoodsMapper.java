@@ -1,6 +1,8 @@
 package com.boot.ugo.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.boot.ugo.entity.Goods;
 import com.boot.ugo.entity.vo.CategoryGoodsVo;
 import com.boot.ugo.entity.vo.GoodsVo;
@@ -60,5 +62,15 @@ public interface GoodsMapper extends BaseMapper<Goods> {
      * @return java.util.List<com.boot.ugo.entity.vo.GoodsVo>
      */
     List<GoodsVo> getGoodsByKeyword(String keyword, String order);
+
+    /**
+     * getHomeGoodsByPage 自定义分页
+     * @param page 只需要将page作为参数传入即可
+     * @param minId
+     * @param maxId
+     * @return com.baomidou.mybatisplus.core.metadata.IPage<com.boot.ugo.entity.vo.GoodsVo>
+     * @author gnl
+     */
+    IPage<GoodsVo> getHomeGoodsByPage(Page<?> page, Integer minId, Integer maxId);
 
 }

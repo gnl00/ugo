@@ -1,6 +1,7 @@
 package com.boot.ugo;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.boot.ugo.entity.Goods;
 import com.boot.ugo.entity.GoodsPicture;
@@ -87,6 +88,16 @@ public class GoodsTest {
     public void testGetBySort() {
         List<CategoryGoodsVo> goods = goodsMapper.getGoodsBySort(3, "collect");
         goods.forEach(System.out::println);
+    }
+
+    @Test
+    public void test2() {
+        Page<GoodsVo> page = new Page<>();
+        page.setCurrent(1);
+        page.setSize(16*5);
+        IPage<GoodsVo> pageVo = goodsMapper.getHomeGoodsByPage(page, 1, 200);
+        List<GoodsVo> vos = pageVo.getRecords();
+        vos.stream().forEach(System.out::println);
     }
 
 }

@@ -19,7 +19,9 @@ public class CommonTest {
 
         String aesDecoded = PasswordUtils.aesDecoded(aesEncoded);
         System.out.println("解密: " + aesDecoded);
-
+        String s = "1233";
+        char[] c = s.toCharArray();
+        Integer.valueOf(c[1]);
     }
 
 }

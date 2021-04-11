@@ -1,6 +1,7 @@
 package com.boot.ugo.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.boot.ugo.entity.Goods;
@@ -74,7 +75,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
 
                 log.info("getHomeGoods ===> HOT");
 
-                minId = 20;
+                minId = 15;
                 maxId = 70;
 
                 break;
@@ -113,41 +114,23 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
 
                 log.info("getHomeGoods ===> default");
 
-                minId = 30;
-                maxId = 2000;
+                minId = 20;
+                maxId = 1000;
 
         }
 
         Page<Goods> pageWrapper = new Page<>();
         pageWrapper.setCurrent(page);
-        pageWrapper.setSize(16);
+        pageWrapper.setSize(16 * 5);
 
-        QueryWrapper<Goods> wrapper = new QueryWrapper<>();
-        wrapper.select("id,name,price,collect")
-                .eq("status", "up")
-                .ge("id", minId)
-                .le("id", maxId);
-
-        Page<Goods> goodsPage = goodsMapper.selectPage(pageWrapper, wrapper);
-        List<Goods> goods = goodsPage.getRecords();
-
-        List<GoodsVo> goodsVos = new ArrayList<>();
-
-        for (Goods good : goods) {
-
-            QueryWrapper<GoodsPicture> pictureWrapper  = new QueryWrapper<>();
-            pictureWrapper.eq("goods_id", good.getId());
-            List<GoodsPicture> goodsPictures = goodsPictureService.list(pictureWrapper);
-            List<String> pictures = goodsPictures.stream().map(GoodsPicture::getPicture).collect(Collectors.toList());
-
-            goodsVos.add(new GoodsVo(good, pictures, null));
-        }
+        IPage<GoodsVo> pageVo = goodsMapper.getHomeGoodsByPage(pageWrapper, minId, maxId);
+        List<GoodsVo> goodsVos = pageVo.getRecords();
 
         if (CollectionUtils.isEmpty(goodsVos)){
             throw new NotFoundException("获取选项卡商品信息失败");
         }
 
-        return new PageResult(goodsPage.getCurrent(), goodsVos);
+        return new PageResult(pageVo.getCurrent(), goodsVos);
     }
 
     @Override

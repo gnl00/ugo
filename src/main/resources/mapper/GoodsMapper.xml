@@ -64,4 +64,9 @@
         SELECT goods.id goods_id,name goods_name, price,amount,description,collect,picture FROM goods JOIN goods_picture on goods.id = goods_picture.goods_id where name like "%"#{keyword}"%" and status = 'up' order by #{order} ASC
     </select>
 
+    <select id="getHomeGoodsByPage" resultMap="goodsVoMap">
+        select goods_id, name goods_name, price, collect, picture from goods JOIN goods_picture ON goods.id=goods_picture.goods_id
+        WHERE `status`='up' and goods.id &gt;= #{minId} and goods.id &lt;= #{maxId}
+    </select>
+
 </mapper>
